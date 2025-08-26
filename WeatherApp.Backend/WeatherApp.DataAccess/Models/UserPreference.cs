@@ -27,7 +27,7 @@ namespace WeatherApp.DataAccess.Models
         {
 
             builder.HasData(new UserPreference()
-            { Id = 1, UserId = "DemoUser" });
+            { Id = 1, UserId = "DemoUser", ShowSunrise = true });
         }
     }
 }

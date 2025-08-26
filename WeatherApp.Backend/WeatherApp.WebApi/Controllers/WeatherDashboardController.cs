@@ -30,7 +30,6 @@ namespace WeatherApp.WebApi.Controllers
         {
             try
             {
-                userId = "DemoUser";// headerUserId.ToString();
                 if (string.IsNullOrWhiteSpace(userId))
                 {
                     return BadRequest("Empty 'userId' header.");

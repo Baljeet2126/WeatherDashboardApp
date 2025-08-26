@@ -35,7 +35,7 @@ namespace WeatherApp.DataAccess.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     UserId = table.Column<string>(type: "TEXT", maxLength: 200, nullable: false),
                     TemperatureUnit = table.Column<int>(type: "INTEGER", nullable: false),
-                    ShowSunriseOrSunSet = table.Column<bool>(type: "INTEGER", nullable: false)
+                    ShowSunrise = table.Column<bool>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -80,7 +80,7 @@ namespace WeatherApp.DataAccess.Migrations
 
             migrationBuilder.InsertData(
                 table: "UserPreference",
-                columns: new[] { "Id", "ShowSunriseOrSunSet", "TemperatureUnit", "UserId" },
+                columns: new[] { "Id", "ShowSunrise", "TemperatureUnit", "UserId" },
                 values: new object[] { 1, true, 0, "DemoUser" });
 
             migrationBuilder.CreateIndex(

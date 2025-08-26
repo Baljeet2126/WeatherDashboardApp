@@ -11,7 +11,7 @@ using WeatherApp.DataAccess.Context;
 namespace WeatherApp.DataAccess.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20250824134242_InitialCreate")]
+    [Migration("20250826181138_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -77,7 +77,7 @@ namespace WeatherApp.DataAccess.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<bool>("ShowSunriseOrSunSet")
+                    b.Property<bool>("ShowSunrise")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("TemperatureUnit")
@@ -96,7 +96,7 @@ namespace WeatherApp.DataAccess.Migrations
                         new
                         {
                             Id = 1,
-                            ShowSunriseOrSunSet = true,
+                            ShowSunrise = true,
                             TemperatureUnit = 0,
                             UserId = "DemoUser"
                         });

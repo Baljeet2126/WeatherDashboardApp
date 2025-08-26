@@ -15,3 +15,4 @@ if (app.Environment.IsDevelopment())
 app.UseCors("AllowFrontend");
 app.MapControllers();
 app.Run();
+public partial class Program { }
