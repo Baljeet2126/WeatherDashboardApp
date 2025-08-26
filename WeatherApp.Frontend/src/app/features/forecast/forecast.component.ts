@@ -7,26 +7,32 @@ import { MaterialModules } from '../../core/material.module';
 import { NgIf } from '@angular/common';
 import { WeatherState } from '../../state/weather/weather.state';
 import { WeatherTrend } from '../../core/models/enums/weather-trend.enum';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-forecast',
   standalone: true,
-  imports: [NgIf ,...MaterialModules],
+  imports: [NgIf, RouterLink, ...MaterialModules],
   templateUrl: './forecast.component.html',
-  styleUrls: ['./forecast.component.scss']
+  styleUrls: ['./forecast.component.scss'],
 })
 export class ForecastComponent implements OnInit {
   cityId!: number;
   weatherForecast?: WeatherRecord;
   WeatherTrend = WeatherTrend;
 
-  @Select(WeatherState.weatherRecords) weatherRecords$!: Observable<WeatherRecord[]>;
+  @Select(WeatherState.weatherRecords) weatherRecords$!: Observable<
+    WeatherRecord[]
+  >;
 
-  constructor(private route: ActivatedRoute, private store: Store) {}
+  constructor(
+    private route: ActivatedRoute,
+    private store: Store,
+  ) {}
 
   ngOnInit(): void {
     this.cityId = +this.route.snapshot.paramMap.get('cityId')!;
     const allRecords = this.store.selectSnapshot(WeatherState.weatherRecords);
-    this.weatherForecast = allRecords.find(r => r.cityId === this.cityId);
+    this.weatherForecast = allRecords.find((r) => r.cityId === this.cityId);
   }
 }

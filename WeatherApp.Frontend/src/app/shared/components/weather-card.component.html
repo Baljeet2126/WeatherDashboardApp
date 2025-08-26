@@ -11,10 +11,14 @@
       <mat-icon [matTooltip]="trendTooltip">{{ trendIcon }}</mat-icon>
     </div>
 
-    <img [src]="iconUrl" alt="{{ weather.description }}" title="{{weather.description }}" />
+    <img
+      [src]="iconUrl"
+      alt="{{ weather.description }}"
+      title="{{ weather.description }}"
+    />
 
     <div class="sun-info">
-      <mat-icon>{{ showSunrise ? 'wb_sunny' : 'nights_stay' }}</mat-icon>
+      <mat-icon>{{ showSunrise ? "wb_sunny" : "nights_stay" }}</mat-icon>
       {{ sunEventTime }}
     </div>
   </mat-card-content>

@@ -2,7 +2,11 @@ import { State, Action, StateContext, Selector } from '@ngxs/store';
 import { Injectable } from '@angular/core';
 import { WeatherService } from '../../core/services/weather.service';
 import { WeatherStateModel } from './weather.model';
-import { LoadWeather, LoadWeatherSuccess, LoadWeatherFail } from './weather.actions';
+import {
+  LoadWeather,
+  LoadWeatherSuccess,
+  LoadWeatherFail,
+} from './weather.actions';
 import { WeatherRecord } from '../../core/models/weather-record.model';
 import { tap } from 'rxjs/operators';
 
@@ -10,15 +14,15 @@ import { tap } from 'rxjs/operators';
   name: 'weather',
   defaults: {
     weatherRecords: [],
-    loading: false
-  }
+    loading: false,
+  },
 })
 @Injectable()
 export class WeatherState {
   constructor(private weatherService: WeatherService) {}
 
-    @Selector()
-    static weatherRecords(state: WeatherStateModel) {
+  @Selector()
+  static weatherRecords(state: WeatherStateModel) {
     return state.weatherRecords;
   }
 
@@ -28,32 +32,39 @@ export class WeatherState {
   }
 
   @Action(LoadWeather)
-loadWeather(ctx: StateContext<WeatherStateModel>, action: LoadWeather) {
-  ctx.patchState({ loading: true });
+  loadWeather(ctx: StateContext<WeatherStateModel>, action: LoadWeather) {
+    ctx.patchState({ loading: true });
 
-  return this.weatherService.getCurrentWeatherForAllCities(action.userId).pipe(
-    tap({
-      next: (data :WeatherRecord[]) => {
-        ctx.dispatch(new LoadWeatherSuccess(data));
-      },
-      error: (err: any) => {
-        ctx.dispatch(new LoadWeatherFail(err));
-      }
-    })
-  );
-}
-
+    return this.weatherService
+      .getCurrentWeatherForAllCities(action.userId)
+      .pipe(
+        tap({
+          next: (data: WeatherRecord[]) => {
+            ctx.dispatch(new LoadWeatherSuccess(data));
+          },
+          error: (err: any) => {
+            ctx.dispatch(new LoadWeatherFail(err));
+          },
+        }),
+      );
+  }
 
   @Action(LoadWeatherSuccess)
-  loadWeatherSuccess(ctx: StateContext<WeatherStateModel>, action: LoadWeatherSuccess) {
+  loadWeatherSuccess(
+    ctx: StateContext<WeatherStateModel>,
+    action: LoadWeatherSuccess,
+  ) {
     ctx.patchState({
       weatherRecords: action.payload,
-      loading: false
+      loading: false,
     });
   }
 
   @Action(LoadWeatherFail)
-  loadWeatherFail(ctx: StateContext<WeatherStateModel>, action: LoadWeatherFail) {
+  loadWeatherFail(
+    ctx: StateContext<WeatherStateModel>,
+    action: LoadWeatherFail,
+  ) {
     ctx.patchState({ loading: false });
     console.error('Weather load failed', action.error);
   }

@@ -5,13 +5,13 @@ import { AppConfig } from './app-config.model';
 import { TemperatureUnit } from '../models/enums/temperature-unit.enum';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AppConfigService {
   private readonly config: AppConfig = {
     apiBaseUrl: environment.apiBaseUrl,
     cacheExpirationMinutes: environment.cacheExpirationMinutes ?? 10, // fallback to 10min
-    defaultTemperatureUnit: environment.defaultTemperatureUnit 
+    defaultTemperatureUnit: environment.defaultTemperatureUnit,
   };
 
   getConfig(): AppConfig {

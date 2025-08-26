@@ -1,6 +1,6 @@
-import { SunEvent } from "../../core/models/enums/sun-event.enum";
-import { TemperatureUnit } from "../../core/models/enums/temperature-unit.enum";
-import { UserPreference } from "../../core/models/user-preference.model";
+import { SunEvent } from '../../core/models/enums/sun-event.enum';
+import { TemperatureUnit } from '../../core/models/enums/temperature-unit.enum';
+import { UserPreference } from '../../core/models/user-preference.model';
 
 export class SetTemperatureUnit {
   static readonly type = '[UserPreference] Set Unit';
@@ -9,7 +9,7 @@ export class SetTemperatureUnit {
 
 export class SetSunEvent {
   static readonly type = '[UserPreference] Set Sun Event';
-   constructor(public sunEvent: SunEvent) {}
+  constructor(public sunEvent: SunEvent) {}
 }
 
 export class SaveUserPreference {
@@ -17,6 +17,6 @@ export class SaveUserPreference {
   constructor(
     public userId: string,
     public unit: TemperatureUnit,
-    public showSunrise: boolean
+    public showSunrise: boolean,
   ) {}
 }

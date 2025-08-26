@@ -1,6 +1,6 @@
-import { WeatherRecord } from "../../core/models/weather-record.model";
+import { WeatherRecord } from '../../core/models/weather-record.model';
 
 export interface WeatherStateModel {
-   weatherRecords: WeatherRecord[];
+  weatherRecords: WeatherRecord[];
   loading: boolean;
 }

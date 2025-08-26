@@ -11,7 +11,7 @@ import { RouterLink } from '@angular/router';
   standalone: true,
   templateUrl: './weather-card.component.html',
   styleUrls: ['./weather-card.component.scss'],
-  imports: [CommonModule,RouterLink, MaterialModules]
+  imports: [CommonModule, RouterLink, MaterialModules],
 })
 export class WeatherCardComponent {
   @Input() weather!: WeatherRecord;
@@ -25,27 +25,37 @@ export class WeatherCardComponent {
   }
 
   get sunEventTime(): string {
-    const timestamp = this.showSunrise ? this.weather.sunriseTime : this.weather.sunsetTime;
-    return new Date(timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    const timestamp = this.showSunrise
+      ? this.weather.sunriseTime
+      : this.weather.sunsetTime;
+    return new Date(timestamp).toLocaleTimeString([], {
+      hour: '2-digit',
+      minute: '2-digit',
+    });
   }
 
   get trendIcon(): string {
     switch (this.weather.trend.toLocaleLowerCase()) {
-      case WeatherTrend.Rising: return 'arrow_upward';
-      case WeatherTrend.Falling: return 'arrow_downward';
-      default: return 'horizontal_rule';
+      case WeatherTrend.Rising:
+        return 'arrow_upward';
+      case WeatherTrend.Falling:
+        return 'arrow_downward';
+      default:
+        return 'horizontal_rule';
     }
   }
 
   get trendTooltip(): string {
     switch (this.weather.trend.toLocaleLowerCase()) {
-      case WeatherTrend.Rising: return 'Rising in last 3 hours';
-      case WeatherTrend.Falling: return 'Falling in last 3 hours';
-      default: return 'Stable';
+      case WeatherTrend.Rising:
+        return 'Rising in last 3 hours';
+      case WeatherTrend.Falling:
+        return 'Falling in last 3 hours';
+      default:
+        return 'Stable';
     }
-}
-   get iconUrl(): string {
+  }
+  get iconUrl(): string {
     return `https://openweathermap.org/img/wn/${this.weather.icon}@2x.png`;
-    }
+  }
 }
-

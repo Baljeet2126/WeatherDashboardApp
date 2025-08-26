@@ -1,16 +1,19 @@
-<mat-toolbar color="primary">
-  Weather Dashboard
-</mat-toolbar>
+<mat-toolbar color="primary"> Weather Dashboard </mat-toolbar>
 <div class="preferences">
-  <mat-button-toggle-group
-    [value]="(unit$ | async)"
-    (change)="onUnitChange($event.value)">
-    <mat-button-toggle [value]="'metric'">°C</mat-button-toggle>
-    <mat-button-toggle [value]="'imperial'">°F</mat-button-toggle>
-  </mat-button-toggle-group>
+  <div>
+    <span class="label">Temperature Unit: </span>
+    <mat-button-toggle-group
+      [value]="unit$ | async"
+      (change)="onUnitChange($event.value)"
+    >
+      <mat-button-toggle [value]="'metric'">°C</mat-button-toggle>
+      <mat-button-toggle [value]="'imperial'">°F</mat-button-toggle>
+    </mat-button-toggle-group>
+  </div>
   <mat-slide-toggle
     [checked]="(showSunrise$ | async)!"
-    (change)="onToggleSunEvent($event.checked)">
+    (change)="onToggleSunEvent($event.checked)"
+  >
     Show Sunrise
   </mat-slide-toggle>
 </div>
@@ -24,9 +27,9 @@
       <app-weather-card
         [weather]="city"
         [unit]="(unit$ | async)!"
-        [showSunrise]="(showSunrise$ | async)!">
+        [showSunrise]="(showSunrise$ | async)!"
+      >
       </app-weather-card>
     }
   </div>
 }
-

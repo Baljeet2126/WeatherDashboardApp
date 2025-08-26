@@ -4,10 +4,10 @@ import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ApiService {
-  private baseUrl = environment.apiBaseUrl; 
+  private baseUrl = environment.apiBaseUrl;
 
   constructor(private http: HttpClient) {}
 
@@ -21,13 +21,13 @@ export class ApiService {
 
   get<T>(url: string, userId?: string): Observable<T> {
     return this.http.get<T>(`${this.baseUrl}${url}`, {
-      headers: this.createHeaders(userId)
+      headers: this.createHeaders(userId),
     });
   }
 
   post<T>(url: string, body: any, userId?: string): Observable<T> {
     return this.http.post<T>(`${this.baseUrl}${url}`, body, {
-      headers: this.createHeaders(userId)
+      headers: this.createHeaders(userId),
     });
   }
 }

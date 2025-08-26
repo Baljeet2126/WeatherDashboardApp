@@ -16,5 +16,5 @@ export const MaterialModules = [
   MatTooltipModule,
   MatSlideToggleModule,
   MatButtonToggleModule,
-  MatProgressSpinnerModule 
+  MatProgressSpinnerModule,
 ];

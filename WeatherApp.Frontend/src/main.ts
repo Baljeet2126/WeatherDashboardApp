@@ -13,7 +13,6 @@ import { WeatherState } from './app/state/weather/weather.state';
 import { provideRouter } from '@angular/router';
 import { routes } from './app/app.routes';
 
-
 bootstrapApplication(AppComponent, {
   providers: [
     provideRouter(routes),
@@ -23,8 +22,7 @@ bootstrapApplication(AppComponent, {
       MaterialModules,
       NgxsModule.forRoot([UserPreferenceState, WeatherState]),
       NgxsStoragePluginModule.forRoot({ key: ['userPreference'] }),
-      NgxsLoggerPluginModule.forRoot()
-    )
-  ]
+      NgxsLoggerPluginModule.forRoot(),
+    ),
+  ],
 });
-

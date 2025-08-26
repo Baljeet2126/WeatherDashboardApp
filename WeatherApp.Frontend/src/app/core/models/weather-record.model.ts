@@ -1,4 +1,4 @@
-import { WeatherTrend } from "./enums/weather-trend.enum";
+import { WeatherTrend } from './enums/weather-trend.enum';
 
 export interface WeatherRecord {
   cityId: number;

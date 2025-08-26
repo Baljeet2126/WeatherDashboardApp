@@ -11,19 +11,20 @@
     </div>
 
     <div class="trend">
-       <mat-icon
-  [class.rising]="weatherForecast.trend === WeatherTrend.Rising"
-  [class.falling]="weatherForecast.trend === WeatherTrend.Falling"
-  [class.stable]="weatherForecast.trend === WeatherTrend.Stable">
-  {{
-    weatherForecast.trend === WeatherTrend.Rising
-      ? 'trending_up'
-      : weatherForecast.trend === WeatherTrend.Falling
-      ? 'trending_down'
-      : 'trending_flat'
-  }}
-</mat-icon>
-      
+      <mat-icon
+        [class.rising]="weatherForecast.trend === WeatherTrend.Rising"
+        [class.falling]="weatherForecast.trend === WeatherTrend.Falling"
+        [class.stable]="weatherForecast.trend === WeatherTrend.Stable"
+      >
+        {{
+          weatherForecast.trend === WeatherTrend.Rising
+            ? "trending_up"
+            : weatherForecast.trend === WeatherTrend.Falling
+              ? "trending_down"
+              : "trending_flat"
+        }}
+      </mat-icon>
+
       <span class="trend-label">{{ weatherForecast.trend }}</span>
     </div>
   </mat-card-content>
