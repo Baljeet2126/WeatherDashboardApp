@@ -18,7 +18,7 @@ namespace WeatherApp.DataAccess.Models
         public string UserId { get; set; } = string.Empty;
         public TemperatureUnit TemperatureUnit { get; set; } = TemperatureUnit.Metric;
 
-        public bool ShowSunriseOrSunSet { get; set; } = true;
+        public bool ShowSunrise { get; set; } = true;
     }
 
     public class UserPreferenceEntityConfiguration : IEntityTypeConfiguration<UserPreference>

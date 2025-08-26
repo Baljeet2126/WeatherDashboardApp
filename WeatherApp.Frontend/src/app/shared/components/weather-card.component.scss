@@ -1,0 +1,48 @@
+.weather-card {
+  max-width: 300px;
+  margin: 1rem;
+  border-radius: 12px;
+
+  mat-card-header {
+    background: linear-gradient(45deg, #2196f3, #21cbf3);
+    color: white;
+    padding: 0.5rem 1rem;
+
+    mat-card-title {
+      font-size: 1.2rem;
+      font-weight: 600;
+    }
+  }
+
+  .temperature {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 2rem;
+    font-weight: bold;
+    margin: 1rem 0;
+
+    mat-icon {
+      font-size: 2rem;
+    }
+  }
+
+  .sun-info {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1rem;
+    color: #555;
+
+    mat-icon {
+      color: #ff9800;
+    }
+  }
+
+  mat-card-footer {
+    text-align: right;
+    padding: 0.5rem;
+    font-size: 0.8rem;
+    color: gray;
+  }
+}

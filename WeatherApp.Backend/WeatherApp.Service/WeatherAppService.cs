@@ -14,7 +14,6 @@ namespace WeatherApp.Service
         private readonly ICacheService _cacheService;
         private readonly ILogger _logger;
         private readonly TimeSpan _cacheExiration;
-        private readonly IConfigurationService _configurationService;
         public WeatherAppService(
             IWeatherAppRepository repository,
             IWeatherApiClient weatherApiClient,
@@ -27,7 +26,6 @@ namespace WeatherApp.Service
             _repository = repository;
             _apiClient = weatherApiClient;
             _cacheService = cacheService;
-            _configurationService = configurationService;
             _logger = loggger;
             _cacheExiration = TimeSpan.FromMinutes( configurationService.GetWeatherAppConfiguration().CacheExiprationMinutes);
         }
@@ -68,7 +66,6 @@ namespace WeatherApp.Service
 
         public  async Task<TemperatureTrend> GetTemperatureTrendAsync(string cityName)
         {
-
             var weatherHistory = await _repository.GetWeatherHistoryAsync(cityName);
             if(weatherHistory == null || weatherHistory.Count() < 2)
             {
@@ -90,9 +87,30 @@ namespace WeatherApp.Service
             }
         }
 
-        public Task<Dictionary<string, string>> GetTemperatureTrendForAllCitiesAsync()
+        public async Task<Dictionary<string, string>> GetTemperatureTrendForAllCitiesAsync()
         {
-            throw new NotImplementedException();
+            const string cacheKey = "weather_trend";
+            var weatherTrends = new Dictionary<string, string>();
+            var cachedData = await _cacheService.GetByKeyAsync<Dictionary<string, string>>(cacheKey);
+            if (cachedData != null)
+            {
+                return cachedData;
+            }
+            var cities = await _repository.GetCitiesAsync();
+            foreach (var city in cities)
+            {
+                try
+                {
+                    var trend = await GetTemperatureTrendAsync(city.Name);
+                    weatherTrends.Add(city.Name, trend.ToString());
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex, $"Failed to fetch weather trend for {city.Name}");
+                }
+            }
+            await _cacheService.AddToCache(cacheKey, weatherTrends, _cacheExiration);
+            return weatherTrends;
         }
 
         #region UserPreference
@@ -115,7 +133,7 @@ namespace WeatherApp.Service
                 {
                     UserId = userId,
                     TemperatureUnit = TemperatureUnit.Metric,
-                    ShowSunriseOrSunSet = true
+                    ShowSunrise = true
                 };
             }
 

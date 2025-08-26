@@ -19,7 +19,7 @@ namespace WeatherApp.DomainModel.Contracts
 
         Task<TemperatureTrend> GetTemperatureTrendAsync(string cityName);
 
-       // Task<Dictionary<string,string>> GetTemperatureTrendForAllCitiesAsync();
+        Task<Dictionary<string, string>> GetTemperatureTrendForAllCitiesAsync();
 
 
     }

@@ -1,0 +1,27 @@
+<!-- weather-card.component.html -->
+<mat-card class="weather-card">
+  <mat-card-header>
+    <mat-card-title>{{ weather.cityName }}</mat-card-title>
+    <mat-card-subtitle>{{ weather.description | titlecase }}</mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-content>
+    <div class="temperature">
+      {{ temperatureDisplay }}
+      <mat-icon [matTooltip]="trendTooltip">{{ trendIcon }}</mat-icon>
+    </div>
+
+    <img [src]="iconUrl" alt="{{ weather.description }}" title="{{weather.description }}" />
+
+    <div class="sun-info">
+      <mat-icon>{{ showSunrise ? 'wb_sunny' : 'nights_stay' }}</mat-icon>
+      {{ sunEventTime }}
+    </div>
+  </mat-card-content>
+
+  <mat-card-actions>
+    <a mat-button color="primary" [routerLink]="['/forecast', weather.cityId]">
+      View Forecast
+    </a>
+  </mat-card-actions>
+</mat-card>

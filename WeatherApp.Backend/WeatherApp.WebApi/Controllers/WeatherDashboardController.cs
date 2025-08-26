@@ -2,6 +2,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using WeatherApp.DataContract.Api;
 using WeatherApp.DomainModel.Contracts;
+using WeatherApp.DomainModel.DomainModels;
 
 namespace WeatherApp.WebApi.Controllers
 {
@@ -12,13 +13,12 @@ namespace WeatherApp.WebApi.Controllers
         private readonly IWeatherAppService _weatherAppService;
         private IMapper _mapper;
         private readonly ILogger<WeatherDashboardController> _logger;
-      
+
         public WeatherDashboardController(IWeatherAppService weatherAppService, IMapper mapper, ILogger<WeatherDashboardController> logger)
         {
             _weatherAppService = weatherAppService;
             _mapper = mapper;
             _logger = logger;
-          
         }
 
         [HttpGet("weather")]
@@ -26,16 +26,11 @@ namespace WeatherApp.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(string))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(string))]
-        public async Task<IActionResult> GetCurrentWeatherDetails()
+        public async Task<IActionResult> GetCurrentWeatherDetails([FromHeader(Name = "X-User-Id")] string userId)
         {
             try
             {
-                //if (!Request.Headers.TryGetValue("userId", out var headerUserId))
-                //{
-                //    return BadRequest("Missing 'userId' header.");
-                //}
-
-                var userId = "DemoUser";// headerUserId.ToString();
+                userId = "DemoUser";// headerUserId.ToString();
                 if (string.IsNullOrWhiteSpace(userId))
                 {
                     return BadRequest("Empty 'userId' header.");
@@ -66,6 +61,51 @@ namespace WeatherApp.WebApi.Controllers
             }
         }
 
+        [HttpPost("weather/userpreference")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UserPreferenceDomainModel))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ValidationProblemDetails))]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(string))]
+        public async Task<IActionResult> SetUserPreference([FromBody] UserPreferenceDomainModel userPreference)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+                var createdPreference = await _weatherAppService.SaveUserPreferenceAsync(userPreference);
+                return Ok(createdPreference);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error while saving user preferences");
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error while saving user preferences");
+            }
+        }
 
+        [HttpGet("weather/trend")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Dictionary<string,string>))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(string))]
+        public async Task<IActionResult> GetCurrentTrends()
+        {
+            try
+            {
+                var weatherTrends = await _weatherAppService.GetTemperatureTrendForAllCitiesAsync();
+                return Ok(weatherTrends);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error retrieving weather trend");
+                var problemDetails = new ProblemDetails
+                {
+                    Status = StatusCodes.Status500InternalServerError,
+                    Title = "Internal Server Error",
+                    Detail = ex.Message
+                };
+                return StatusCode(problemDetails.Status.Value, problemDetails);
+            }
+        }
     }
 }

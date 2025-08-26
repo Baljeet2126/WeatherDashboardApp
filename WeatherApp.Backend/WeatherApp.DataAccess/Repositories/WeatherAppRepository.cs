@@ -113,7 +113,7 @@ namespace WeatherApp.DataAccess.Repositories
                 return await _dbContext.WeatherStats
                     .AsNoTracking()
                     .Where(w => w.City.Name == cityName)
-                    .OrderByDescending(w => w.RecordedAt)
+                    .OrderBy(w => w.RecordedAt)
                     .Select(weatherDetail => new WeatherRecordDomainModel
                     {
                         Id = weatherDetail.Id,

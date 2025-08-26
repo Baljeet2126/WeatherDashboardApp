@@ -7,7 +7,13 @@ namespace WeatherApp.WebApi.Extensions
     {
         internal static WebApplicationBuilder ConfigureServices(this WebApplicationBuilder builder)
         {
-
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowFrontend",
+                    policy => policy.WithOrigins("http://localhost:4200") // Angular dev server
+                                    .AllowAnyHeader()
+                                    .AllowAnyMethod());
+            });
             builder.Services.AddControllers()
             .AddJsonOptions(options =>
             {

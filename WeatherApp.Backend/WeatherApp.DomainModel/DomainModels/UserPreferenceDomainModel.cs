@@ -9,6 +9,6 @@ namespace WeatherApp.DomainModel.DomainModels
 
         public TemperatureUnit TemperatureUnit { get; set; }
 
-        public bool ShowSunriseOrSunSet { get; set; } = true;
+        public bool ShowSunrise { get; set; } = true;
     }
 }

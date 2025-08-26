@@ -12,5 +12,6 @@ if (app.Environment.IsDevelopment())
        // c.RoutePrefix = string.Empty;
     });
 }
+app.UseCors("AllowFrontend");
 app.MapControllers();
 app.Run();

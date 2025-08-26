@@ -1,0 +1,32 @@
+<mat-toolbar color="primary">
+  Weather Dashboard
+</mat-toolbar>
+<div class="preferences">
+  <mat-button-toggle-group
+    [value]="(unit$ | async)"
+    (change)="onUnitChange($event.value)">
+    <mat-button-toggle [value]="'metric'">°C</mat-button-toggle>
+    <mat-button-toggle [value]="'imperial'">°F</mat-button-toggle>
+  </mat-button-toggle-group>
+  <mat-slide-toggle
+    [checked]="(showSunrise$ | async)!"
+    (change)="onToggleSunEvent($event.checked)">
+    Show Sunrise
+  </mat-slide-toggle>
+</div>
+@if (loading$ | async) {
+  <div class="loading">
+    <mat-spinner diameter="60"></mat-spinner>
+  </div>
+} @else {
+  <div class="weather-cards">
+    @for (city of weather$ | async; track city.cityId) {
+      <app-weather-card
+        [weather]="city"
+        [unit]="(unit$ | async)!"
+        [showSunrise]="(showSunrise$ | async)!">
+      </app-weather-card>
+    }
+  </div>
+}
+
